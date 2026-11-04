@@ -1,0 +1,589 @@
+:host {
+    display: block;
+}
+
+.home {
+    width: min(100%, 1400px);
+    margin: 0 auto;
+    color: #1d2440;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(380px, .95fr);
+    min-height: 680px;
+    overflow: hidden;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #f7f4ec 0%, #edf0f8 100%);
+}
+
+.hero-conteudo {
+    display: flex;
+    padding: clamp(48px, 7vw, 96px);
+    flex-direction: column;
+    justify-content: center;
+}
+
+.etiqueta {
+    color: #b17c18;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    max-width: 720px;
+    margin: 18px 0 24px;
+    font-size: clamp(3rem, 6vw, 6.2rem);
+    line-height: .96;
+    letter-spacing: -.055em;
+}
+
+.hero h1 em {
+    color: #b17c18;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+}
+
+.hero-conteudo>p {
+    max-width: 650px;
+    margin: 0;
+    color: #5d647b;
+    font-size: 1.15rem;
+    line-height: 1.75;
+}
+
+.acoes {
+    display: flex;
+    margin-top: 34px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.botao {
+    display: inline-flex;
+    min-height: 50px;
+    padding: 0 22px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform .2s, background .2s;
+}
+
+.botao:hover {
+    transform: translateY(-2px);
+}
+
+.botao-primario {
+    background: #1d2440;
+    color: #fff;
+}
+
+.botao-primario:hover {
+    background: #35416b;
+}
+
+.botao-secundario {
+    border: 1px solid #c9cedd;
+    color: #1d2440;
+}
+
+.botao-secundario:hover {
+    background: #fff;
+}
+
+.indicadores {
+    display: flex;
+    margin-top: 48px;
+    gap: clamp(24px, 5vw, 56px);
+}
+
+.indicadores div {
+    display: flex;
+    flex-direction: column;
+}
+
+.indicadores strong {
+    font-size: 1.45rem;
+}
+
+.indicadores span {
+    margin-top: 3px;
+    color: #747b91;
+    font-size: .82rem;
+}
+
+.hero-visual {
+    position: relative;
+    min-height: 500px;
+    overflow: hidden;
+    background: linear-gradient(145deg, #1d2440, #35416b);
+}
+
+.circulo {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(2px);
+}
+
+.circulo-um {
+    top: -12%;
+    right: -18%;
+    width: 430px;
+    height: 430px;
+    background: rgb(229 184 91 / 35%);
+}
+
+.circulo-dois {
+    bottom: -18%;
+    left: -15%;
+    width: 360px;
+    height: 360px;
+    background: rgb(113 131 190 / 30%);
+}
+
+.cartao {
+    position: absolute;
+    border: 1px solid rgb(255 255 255 / 25%);
+    background: rgb(255 255 255 / 93%);
+    box-shadow: 0 24px 60px rgb(10 16 41 / 28%);
+}
+
+.cartao-principal {
+    top: 50%;
+    left: 50%;
+    display: flex;
+    width: min(72%, 430px);
+    min-height: 380px;
+    padding: 38px;
+    border-radius: 26px;
+    flex-direction: column;
+    transform: translate(-50%, -50%) rotate(-3deg);
+}
+
+.cartao-principal .icone {
+    display: grid;
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: #e5b85b;
+    place-items: center;
+    font-size: 1.6rem;
+}
+
+.cartao-principal small {
+    margin-top: auto;
+    color: #7c8398;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.cartao-principal strong {
+    margin: 12px 0 26px;
+    font-size: 1.9rem;
+    line-height: 1.2;
+}
+
+.linha {
+    display: flex;
+    gap: 8px;
+}
+
+.linha span {
+    width: 65%;
+    height: 8px;
+    border-radius: 8px;
+    background: #1d2440;
+}
+
+.linha span:last-child {
+    width: 25%;
+    background: #e5b85b;
+}
+
+.cartao-flutuante {
+    z-index: 2;
+    display: flex;
+    padding: 15px 18px;
+    border-radius: 14px;
+    align-items: center;
+    gap: 12px;
+}
+
+.cartao-flutuante>span {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: #eef0f7;
+    place-items: center;
+    color: #b17c18;
+    font-weight: 900;
+}
+
+.cartao-flutuante div {
+    display: flex;
+    flex-direction: column;
+}
+
+.cartao-flutuante small {
+    margin-top: 3px;
+    color: #747b91;
+}
+
+.cartao-vendas {
+    top: 18%;
+    left: 5%;
+}
+
+.cartao-criadores {
+    right: 4%;
+    bottom: 16%;
+}
+
+.vitrine {
+    padding: clamp(72px, 8vw, 112px) 0 20px;
+}
+
+.vitrine-cabecalho {
+    display: flex;
+    padding: 0 clamp(0px, 4vw, 56px);
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 28px;
+}
+
+.vitrine-cabecalho h2 {
+    margin: 12px 0 10px;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -.035em;
+}
+
+.vitrine-cabecalho p {
+    margin: 0;
+    color: #6a7188;
+    font-size: 1.05rem;
+}
+
+.controles {
+    display: flex;
+    gap: 10px;
+}
+
+.controles button {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #d8dce7;
+    border-radius: 50%;
+    background: #fff;
+    color: #1d2440;
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: background .2s, color .2s, transform .2s;
+}
+
+.controles button:hover {
+    background: #1d2440;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.trilho {
+    display: flex;
+    overflow-x: auto;
+    padding: 42px clamp(0px, 4vw, 56px) 28px;
+    gap: 18px;
+    scroll-behavior: smooth;
+    scroll-padding-inline: clamp(0px, 4vw, 56px);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #c3c8d8 transparent;
+}
+
+.card-barraca {
+    min-width: min(310px, 82vw);
+    overflow: hidden;
+    border: 1px solid #e0e3ec;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 12px 32px rgb(29 36 64 / 8%);
+    scroll-snap-align: start;
+    transition: transform .25s, box-shadow .25s;
+}
+
+.card-barraca:hover {
+    box-shadow: 0 18px 40px rgb(29 36 64 / 14%);
+    transform: translateY(-6px);
+}
+
+.capa {
+    position: relative;
+    display: grid;
+    min-height: 210px;
+    padding: 24px;
+    overflow: hidden;
+    place-items: center;
+}
+
+.capa::before {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border: 1px solid rgb(255 255 255 / 28%);
+    border-radius: 50%;
+    content: '';
+}
+
+.capa::after {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    border: 1px solid rgb(255 255 255 / 28%);
+    border-radius: 50%;
+    content: '';
+}
+
+.capa>span {
+    z-index: 1;
+    color: #fff;
+    font-size: 3.4rem;
+}
+
+.capa small {
+    position: absolute;
+    right: 18px;
+    bottom: 15px;
+    color: rgb(255 255 255 / 78%);
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.capa.azul {
+    background: linear-gradient(135deg, #253058, #6676b3);
+}
+
+.capa.dourado {
+    background: linear-gradient(135deg, #9b6814, #e5b85b);
+}
+
+.capa.verde {
+    background: linear-gradient(135deg, #27624f, #6eaf8d);
+}
+
+.capa.lilas {
+    background: linear-gradient(135deg, #583f75, #a781c5);
+}
+
+.capa.coral {
+    background: linear-gradient(135deg, #91483e, #df8b78);
+}
+
+.card-corpo {
+    padding: 24px;
+}
+
+.categoria {
+    color: #b17c18;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.card-corpo h3 {
+    min-height: 58px;
+    margin: 10px 0 24px;
+    font-size: 1.3rem;
+    line-height: 1.35;
+}
+
+.card-corpo a {
+    display: flex;
+    color: #1d2440;
+    font-weight: 800;
+    justify-content: space-between;
+    text-decoration: none;
+}
+
+.card-corpo a:hover {
+    color: #b17c18;
+}
+
+.dica-arraste {
+    display: none;
+    margin: 4px 0 0;
+    color: #7c8398;
+    font-size: .8rem;
+    text-align: center;
+}
+
+.recursos {
+    padding: clamp(72px, 9vw, 120px) clamp(0px, 4vw, 56px);
+}
+
+.cabecalho-secao {
+    max-width: 680px;
+    margin: 0 auto 48px;
+    text-align: center;
+}
+
+.cabecalho-secao h2,
+.chamada-final h2 {
+    margin: 12px 0 16px;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -.035em;
+}
+
+.cabecalho-secao p {
+    color: #6a7188;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.grade-recursos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.grade-recursos article {
+    min-height: 280px;
+    padding: 34px;
+    border: 1px solid #e0e3ec;
+    border-radius: 20px;
+    background: #fff;
+}
+
+.grade-recursos article.destaque {
+    background: #f7f4ec;
+    transform: translateY(-12px);
+}
+
+.numero {
+    color: #b17c18;
+    font-size: .82rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+}
+
+.grade-recursos h3 {
+    margin: 70px 0 12px;
+    font-size: 1.65rem;
+}
+
+.grade-recursos p {
+    margin: 0;
+    color: #6a7188;
+    line-height: 1.7;
+}
+
+.chamada-final {
+    display: flex;
+    margin-bottom: 8px;
+    padding: clamp(38px, 6vw, 72px);
+    border-radius: 26px;
+    background: #1d2440;
+    color: #fff;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.chamada-final>div {
+    max-width: 760px;
+}
+
+.chamada-final .etiqueta {
+    color: #e5b85b;
+}
+
+.chamada-final h2 {
+    margin-bottom: 0;
+}
+
+.botao-claro {
+    flex: 0 0 auto;
+    background: #e5b85b;
+    color: #172039;
+    gap: 14px;
+}
+
+.botao-claro:hover {
+    background: #f3cf83;
+}
+
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-visual {
+        min-height: 560px;
+    }
+
+    .grade-recursos {
+        grid-template-columns: 1fr;
+    }
+
+    .grade-recursos article.destaque {
+        transform: none;
+    }
+
+    .chamada-final {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 560px) {
+    .hero-conteudo {
+        padding: 42px 24px;
+    }
+
+    .hero h1 {
+        font-size: clamp(2.8rem, 14vw, 4.2rem);
+    }
+
+    .indicadores {
+        gap: 20px;
+        justify-content: space-between;
+    }
+
+    .hero-visual {
+        min-height: 470px;
+    }
+
+    .cartao-principal {
+        width: 78%;
+        min-height: 330px;
+        padding: 28px;
+    }
+
+    .cartao-vendas {
+        top: 8%;
+    }
+
+    .cartao-criadores {
+        right: 2%;
+        bottom: 8%;
+    }
+
+    .vitrine-cabecalho {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .controles {
+        display: none;
+    }
+
+    .dica-arraste {
+        display: block;
+    }
+}

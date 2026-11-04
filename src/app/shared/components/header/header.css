@@ -1,0 +1,64 @@
+/* CSS do cabeçalho: pode ser alterado pelos alunos */
+.cabecalho {
+    background: #1d2440;
+    color: #fff;
+}
+
+.cabecalho-conteudo {
+    width: 100%;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.marca {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+nav a {
+    color: #e7eaf5;
+    text-decoration: none;
+    padding: 9px 12px;
+    border-radius: 6px;
+}
+
+nav a:hover,
+nav a.ativo {
+    background: #35416b;
+    color: #fff;
+}
+
+nav .botao-admin {
+    background: #e5b85b;
+    color: #172039;
+    font-weight: 700;
+}
+
+nav .botao-admin:hover,
+nav .botao-admin.ativo {
+    background: #f3cf83;
+    color: #172039;
+}
+
+@media (max-width: 600px) {
+    .cabecalho-conteudo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav {
+        gap: 4px;
+    }
+}

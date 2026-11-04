@@ -1,0 +1,49 @@
+@if (barraca$ | async; as barraca) {
+<article class="detalhe">
+  <a class="voltar" routerLink="/barracas"><span>←</span> Voltar para barracas</a>
+  <section class="apresentacao">
+    <div class="capa" [class]="'capa ' + ['azul', 'dourado', 'verde', 'lilas', 'coral'][(barraca.id - 1) % 5]" aria-hidden="true">
+      <span>🍴</span><small>FoodFest</small>
+    </div>
+    <div class="informacoes">
+      <span class="categoria">{{ barraca.especialidade }}</span>
+      <h1>{{ barraca.nome }}</h1>
+      <p class="introducao">Conheça os sabores de {{ barraca.nome }} e confira as informações de participação na feira.</p>
+      <div class="metadados">
+        <div><span>Localização</span><strong>{{ barraca.localizacao }}</strong></div>
+        <div><span>Participação</span><strong>{{ barraca.ativa ? 'Ativa' : 'Inativa' }}</strong></div>
+        <div><span>Responsável</span><strong>{{ barraca.responsavel }}</strong></div>
+      </div>
+      <p class="preco"><span>Preço médio</span><strong>{{ barraca.precoMedio | currency:'BRL':'symbol':'1.2-2':'pt-BR'
+          }}</strong></p>
+      <button class="botao-principal" type="button">Conhecer esta barraca <span>→</span></button>
+      <p class="observacao">Informações demonstrativas dos participantes da feira.</p>
+    </div>
+  </section>
+  <section class="descricao">
+    <div class="texto">
+      <span class="rotulo">Sobre esta barraca</span>
+      <h2>{{ barraca.nome }}</h2>
+      <p>A especialidade da barraca é {{ barraca.especialidade }}. O estabelecimento fica em {{ barraca.localizacao }}
+        e tem como responsável {{ barraca.responsavel }}.</p>
+      <p>Telefone para contato: {{ barraca.telefone }}.</p>
+    </div>
+    <aside>
+      <h3>Informações da barraca</h3>
+      <ul>
+        <li><span>✓</span> {{ barraca.especialidade }}</li>
+        <li><span>✓</span> {{ barraca.localizacao }}</li>
+        <li><span>✓</span> {{ barraca.telefone }}</li>
+        <li><span>✓</span> Participação {{ barraca.ativa ? 'ativa' : 'inativa' }}</li>
+      </ul>
+    </aside>
+  </section>
+</article>
+} @else {
+<section class="nao-encontrado">
+  <span>404</span>
+  <h1>Barraca não encontrada</h1>
+  <p>O estabelecimento pode não existir ou ter sido removido da lista.</p>
+  <a routerLink="/barracas">Ver todas as barracas</a>
+</section>
+}

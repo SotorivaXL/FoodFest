@@ -1,0 +1,15 @@
+/* CSS do rodapé: pode ser alterado pelos alunos */
+.rodape {
+    background: #1d2440;
+    color: #fff;
+    text-align: center;
+    padding: 24px 16px;
+}
+
+.rodape p {
+    margin: 0 0 8px;
+}
+
+.rodape small {
+    color: #c5cbe0;
+}

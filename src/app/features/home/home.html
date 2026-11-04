@@ -1,0 +1,97 @@
+<div class="home">
+  <section class="hero">
+    <div class="hero-conteudo">
+      <span class="etiqueta">Feiras gastronômicas sem complicação</span>
+      <h1>Os melhores sabores <em>se encontram aqui.</em></h1>
+      <p>O FoodFest reúne barracas, responsáveis e especialidades culinárias em um só lugar — simples para quem organiza
+        e agradável para quem visita.</p>
+      <div class="acoes">
+        <a class="botao botao-primario" routerLink="/barracas">Explorar barracas</a>
+        <a class="botao botao-secundario" routerLink="/sobre">Conhecer o projeto</a>
+      </div>
+      <div class="indicadores" aria-label="Destaques da plataforma">
+        <div><strong>100%</strong><span>sabor</span></div>
+        <div><strong>10</strong><span>barracas cadastradas</span></div>
+        <div><strong>∞</strong><span>bons encontros</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="circulo circulo-um"></div>
+      <div class="circulo circulo-dois"></div>
+      <div class="cartao cartao-principal">
+        <span class="icone">🍴</span>
+        <small>Sabores em destaque</small>
+        <strong>Transforme sua feira em um grande encontro.</strong>
+        <div class="linha"><span></span><span></span></div>
+      </div>
+      <div class="cartao cartao-flutuante cartao-vendas"><span>↗</span>
+        <div><strong>Sabores</strong><small>reunidos por aqui</small></div>
+      </div>
+      <div class="cartao cartao-flutuante cartao-criadores"><span>♥</span>
+        <div><strong>Participantes</strong><small>comida que conecta</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vitrine" aria-labelledby="titulo-vitrine">
+    <div class="vitrine-cabecalho">
+      <div>
+        <span class="etiqueta">Sabores para você</span>
+        <h2 id="titulo-vitrine">Barracas em destaque</h2>
+        <p>Uma amostra dos estabelecimentos cadastrados na nossa feira.</p>
+      </div>
+      <div class="controles" aria-label="Controles do carrossel">
+        <button type="button" aria-label="Ver barracas anteriores" (click)="moverCarrossel(trilho, -1)">←</button>
+        <button type="button" aria-label="Ver próximas barracas" (click)="moverCarrossel(trilho, 1)">→</button>
+      </div>
+    </div>
+
+    <div class="trilho" #trilho tabindex="0" aria-label="Carrossel de barracas em destaque">
+      @for (barraca of barracasDestaque$ | async; track barraca.id) {
+      <article class="card-barraca">
+        <div class="capa" [class]="'capa ' + ['azul', 'dourado', 'verde', 'lilas', 'coral'][(barraca.id - 1) % 5]">
+          <span>🍴</span>
+          <small>FoodFest</small>
+        </div>
+        <div class="card-corpo">
+          <span class="categoria">{{ barraca.especialidade }}</span>
+          <h3>{{ barraca.nome }}</h3>
+          <a [routerLink]="['/barracas', barraca.id]" [attr.aria-label]="'Conhecer ' + barraca.nome">Conhecer
+            <span>→</span></a>
+        </div>
+      </article>
+      }
+    </div>
+    <p class="dica-arraste">Arraste para o lado para ver mais barracas</p>
+  </section>
+
+  <section class="recursos" aria-labelledby="titulo-recursos">
+    <div class="cabecalho-secao">
+      <span class="etiqueta">Da organização à mesa</span>
+      <h2 id="titulo-recursos">Tudo o que sua feira precisa</h2>
+      <p>Uma experiência pensada para organizar os participantes e aproximar o público dos melhores sabores.</p>
+    </div>
+    <div class="grade-recursos">
+      <article><span class="numero">01</span>
+        <h3>Organize</h3>
+        <p>Reúna os estabelecimentos, seus responsáveis e os contatos em um só lugar.</p>
+      </article>
+      <article class="destaque"><span class="numero">02</span>
+        <h3>Apresente</h3>
+        <p>Mostre as especialidades culinárias, a localização e o preço médio de cada barraca.</p>
+      </article>
+      <article><span class="numero">03</span>
+        <h3>Acompanhe</h3>
+        <p>Consulte a participação ativa dos estabelecimentos e prepare os próximos encontros.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chamada-final">
+    <div><span class="etiqueta">Pronto para começar?</span>
+      <h2>Tem sempre um novo sabor esperando para ser descoberto.</h2>
+    </div>
+    <a class="botao botao-claro" routerLink="/barracas">Ver barracas <span>→</span></a>
+  </section>
+</div>
