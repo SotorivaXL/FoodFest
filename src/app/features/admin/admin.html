@@ -1,5 +1,42 @@
-<h1>Administração de barracas</h1>
-<p>Esta área será usada para realizar a manutenção dos estabelecimentos participantes.</p>
-<a routerLink="/admin/novo">Nova barraca</a>
-<h2>Barracas cadastradas</h2>
-<p>Na próxima etapa, esta seção terá a listagem, os botões de editar e excluir e as operações de CRUD.</p>
+<section class="list-box">
+    <div class="top-bar">
+        <h2>Lista de Barracas</h2>
+        <a routerLink="/admin/form" class="btn">Novo</a>
+    </div>
+    @if(sucessMessage){
+        <div class="success-message">
+            {{ sucessMessage }}
+        </div>
+    }
+
+    @if(errorMessage){
+        <div class="error-message">
+            {{ errorMessage }}
+        </div>
+    }
+
+    @if (loading) {
+        <div class="loading">
+            <p>Carregando barracas...</p>
+        </div>
+    }
+    @if (!loading && barracas.length === 0){
+        <div class="empty-state">
+            <p>Nenhuma barraca encontrada.</p>
+        </div>
+    }
+
+    <div class="barraca-grid">
+        @for(barraca of barracas; track barraca.id){
+        <div class="barraca-item">
+            <h3>{{ barraca.nome }}</h3>
+            <p>{{ barraca.especialidade }}</p>
+            <p>{{ barraca.precoMedio}}</p>
+            <div class="actions">
+                <button type="button" class="btn-edit" (click)="edit(barraca.id)">Editar</button>
+                <button type="button" class="btn-delete" (click)="remove(barraca.id)">Excluir</button>
+            </div>
+        </div>
+        }
+    </div>
+</section>

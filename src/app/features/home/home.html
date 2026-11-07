@@ -50,7 +50,7 @@
     <div class="trilho" #trilho tabindex="0" aria-label="Carrossel de barracas em destaque">
       @for (barraca of barracasDestaque$ | async; track barraca.id) {
       <article class="card-barraca">
-        <div class="capa" [class]="'capa ' + ['azul', 'dourado', 'verde', 'lilas', 'coral'][(barraca.id - 1) % 5]">
+        <div class="capa" [class]="'capa ' + ['azul', 'dourado', 'verde', 'lilas', 'coral'][barraca.id.charCodeAt(barraca.id.length - 1) % 5]">
           <span>🍴</span>
           <small>FoodFest</small>
         </div>

@@ -6,7 +6,7 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server
   },
   {
-    path: 'admin/editar/:id',
+    path: 'admin/form/:id',
     renderMode: RenderMode.Server
   },
   {

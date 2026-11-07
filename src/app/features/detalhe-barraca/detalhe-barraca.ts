@@ -15,8 +15,8 @@ export class DetalheBarraca {
 
   constructor(route: ActivatedRoute, barracasService: BarracasService) {
     this.barraca$ = route.paramMap.pipe(
-      map((parametros) => Number(parametros.get("id"))),
-      switchMap((id) => barracasService.buscarPorId(id)),
+      map((parametros) => parametros.get("id") ?? ""),
+      switchMap((id) => barracasService.getById(id)),
     );
   }
 }

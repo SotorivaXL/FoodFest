@@ -2,7 +2,7 @@
 <article class="detalhe">
   <a class="voltar" routerLink="/barracas"><span>←</span> Voltar para barracas</a>
   <section class="apresentacao">
-    <div class="capa" [class]="'capa ' + ['azul', 'dourado', 'verde', 'lilas', 'coral'][(barraca.id - 1) % 5]" aria-hidden="true">
+    <div class="capa" [class]="'capa ' + ['azul', 'dourado', 'verde', 'lilas', 'coral'][barraca.id.charCodeAt(barraca.id.length - 1) % 5]" aria-hidden="true">
       <span>🍴</span><small>FoodFest</small>
     </div>
     <div class="informacoes">

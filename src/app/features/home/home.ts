@@ -15,7 +15,7 @@ export class Home {
 
   constructor(barracasService: BarracasService) {
     this.barracasDestaque$ = barracasService
-      .listar()
+      .getAll()
       .pipe(map((barracas) => barracas.slice(0, 10)));
   }
 
