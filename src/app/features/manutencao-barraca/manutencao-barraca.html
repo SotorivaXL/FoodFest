@@ -1,3 +1,108 @@
-<h1>Manutenção de barraca</h1>
-<p>O formulário de cadastro e edição será implementado nas próximas aulas.</p>
-<a routerLink="/admin">Voltar para administração</a>
+<section class="form-box" aria-labelledby="titulo-formulario">
+  <h1 id="titulo-formulario">{{ editingId !== null ? 'Editar barraca' : 'Adicionar barraca' }}</h1>
+  <p>Preencha os dados da barraca. O preço médio deve ser informado em reais.</p>
+
+  @if (loadingData) {
+    <div class="info-message" role="status">Carregando dados da barraca...</div>
+  }
+  @if (successMessage) {
+    <div class="success-message" role="status">{{ successMessage }}</div>
+  }
+  @if (errorMessage) {
+    <div class="error-message" role="alert">{{ errorMessage }}</div>
+  }
+  @if (loadError && editingId !== null) {
+    <button type="button" (click)="loadBarraca(editingId)">Tentar carregar novamente</button>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()" [attr.aria-busy]="loading || loadingData">
+    <fieldset [disabled]="loading || loadingData || loadError || successMessage !== ''">
+      <legend>Dados da barraca</legend>
+      <div class="fields">
+        <div class="field">
+          <label for="nome">Nome da barraca</label>
+          <input
+            id="nome"
+            type="text"
+            formControlName="nome"
+            required
+            minlength="3"
+            aria-describedby="nome-ajuda"
+          />
+          <span id="nome-ajuda" class="character-count"
+            >{{ form.controls.nome.value.length }} caracteres · mínimo de 3</span
+          >
+          @if (form.controls.nome.touched && form.controls.nome.invalid) {
+            <small>Informe o nome da barraca com no mínimo 3 caracteres.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="responsavel">Responsável</label>
+          <input
+            id="responsavel"
+            type="text"
+            formControlName="responsavel"
+            required
+            autocomplete="name"
+          />
+          @if (form.controls.responsavel.touched && form.controls.responsavel.invalid) {
+            <small>Informe o nome do responsável.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="especialidade">Especialidade</label>
+          <input id="especialidade" type="text" formControlName="especialidade" required />
+          @if (form.controls.especialidade.touched && form.controls.especialidade.invalid) {
+            <small>Informe a especialidade da barraca.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="localizacao">Localização</label>
+          <input id="localizacao" type="text" formControlName="localizacao" required />
+          @if (form.controls.localizacao.touched && form.controls.localizacao.invalid) {
+            <small>Informe onde a barraca está localizada.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="precoMedio">Preço médio (R$)</label>
+          <input
+            id="precoMedio"
+            type="number"
+            formControlName="precoMedio"
+            required
+            min="0"
+            step="0.01"
+          />
+          @if (form.controls.precoMedio.touched && form.controls.precoMedio.invalid) {
+            <small>Informe um preço médio maior ou igual a zero.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="telefone">Telefone</label>
+          <input id="telefone" type="tel" formControlName="telefone" required autocomplete="tel" />
+          @if (form.controls.telefone.touched && form.controls.telefone.invalid) {
+            <small>Informe o telefone de contato.</small>
+          }
+        </div>
+      </div>
+
+      <label class="checkbox-field" for="ativa">
+        <input id="ativa" type="checkbox" formControlName="ativa" />
+        Barraca ativa
+      </label>
+
+      <button type="submit">
+        {{
+          loading ? 'Salvando...' : editingId !== null ? 'Salvar alterações' : 'Cadastrar barraca'
+        }}
+      </button>
+    </fieldset>
+  </form>
+
+  <a class="back-link" routerLink="/admin">Voltar para administração</a>
+</section>
