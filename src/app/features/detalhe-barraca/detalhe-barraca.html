@@ -1,49 +1,79 @@
-@if (barraca$ | async; as barraca) {
-<article class="detalhe">
-  <a class="voltar" routerLink="/barracas"><span>←</span> Voltar para barracas</a>
-  <section class="apresentacao">
-    <div class="capa" [class]="'capa ' + ['azul', 'dourado', 'verde', 'lilas', 'coral'][barraca.id.charCodeAt(barraca.id.length - 1) % 5]" aria-hidden="true">
-      <span>🍴</span><small>FoodFest</small>
-    </div>
-    <div class="informacoes">
-      <span class="categoria">{{ barraca.especialidade }}</span>
-      <h1>{{ barraca.nome }}</h1>
-      <p class="introducao">Conheça os sabores de {{ barraca.nome }} e confira as informações de participação na feira.</p>
-      <div class="metadados">
-        <div><span>Localização</span><strong>{{ barraca.localizacao }}</strong></div>
-        <div><span>Participação</span><strong>{{ barraca.ativa ? 'Ativa' : 'Inativa' }}</strong></div>
-        <div><span>Responsável</span><strong>{{ barraca.responsavel }}</strong></div>
+@if (loading()) {
+  <section class="empty" role="status">Carregando os detalhes da barraca...</section>
+} @else if (errorMessage()) {
+  <section class="empty">
+    <div class="notice error" role="alert">{{ errorMessage() }}</div>
+    <button class="button" type="button" (click)="retry()">Tentar novamente</button>
+    <a class="button secondary" routerLink="/barracas">Voltar para barracas</a>
+  </section>
+} @else if (barraca(); as item) {
+  <article class="detalhe">
+    <a class="voltar" routerLink="/barracas">← Voltar para barracas</a>
+    <section class="apresentacao">
+      <div class="capa" [class]="'capa tom-' + (item.id % 5)" aria-hidden="true">
+        <span>🍴</span><small>Sabores que conectam · FoodFest</small>
       </div>
-      <p class="preco"><span>Preço médio</span><strong>{{ barraca.precoMedio | currency:'BRL':'symbol':'1.2-2':'pt-BR'
-          }}</strong></p>
-      <button class="botao-principal" type="button">Conhecer esta barraca <span>→</span></button>
-      <p class="observacao">Informações demonstrativas dos participantes da feira.</p>
-    </div>
-  </section>
-  <section class="descricao">
-    <div class="texto">
-      <span class="rotulo">Sobre esta barraca</span>
-      <h2>{{ barraca.nome }}</h2>
-      <p>A especialidade da barraca é {{ barraca.especialidade }}. O estabelecimento fica em {{ barraca.localizacao }}
-        e tem como responsável {{ barraca.responsavel }}.</p>
-      <p>Telefone para contato: {{ barraca.telefone }}.</p>
-    </div>
-    <aside>
-      <h3>Informações da barraca</h3>
-      <ul>
-        <li><span>✓</span> {{ barraca.especialidade }}</li>
-        <li><span>✓</span> {{ barraca.localizacao }}</li>
-        <li><span>✓</span> {{ barraca.telefone }}</li>
-        <li><span>✓</span> Participação {{ barraca.ativa ? 'ativa' : 'inativa' }}</li>
-      </ul>
-    </aside>
-  </section>
-</article>
+      <div class="informacoes">
+        <span class="badge" [class.inativa]="!item.ativa">{{
+          item.ativa ? 'Participação ativa' : 'Participação inativa'
+        }}</span>
+        <span class="categoria">{{ item.especialidade }}</span>
+        <h1>{{ item.nome }}</h1>
+        <p class="introducao">
+          Um convite para descobrir novos sabores e conhecer quem faz a nossa feira acontecer.
+        </p>
+        @if (!item.ativa) {
+          <p class="notice">Este estabelecimento está com a participação inativa no momento.</p>
+        }
+        <dl class="metadados">
+          <div>
+            <dt>Localização</dt>
+            <dd>{{ item.localizacao }}</dd>
+          </div>
+          <div>
+            <dt>Responsável</dt>
+            <dd>{{ item.responsavel }}</dd>
+          </div>
+          <div>
+            <dt>Telefone</dt>
+            <dd>
+              <a [href]="telefoneHref(item.telefone)">{{ item.telefone }}</a>
+            </dd>
+          </div>
+        </dl>
+        <p class="preco">
+          <span>Preço médio</span><strong>{{ item.precoMedio | currency: 'BRL' }}</strong>
+        </p>
+        <a class="button" [href]="telefoneHref(item.telefone)"
+          >Entrar em contato <span aria-hidden="true">↗</span></a
+        >
+      </div>
+    </section>
+    <section class="descricao">
+      <div>
+        <span class="eyebrow">Sobre esta barraca</span>
+        <h2>O sabor tem nome e endereço.</h2>
+        <p>
+          A especialidade de {{ item.nome }} é {{ item.especialidade }}. Encontre o estabelecimento
+          em {{ item.localizacao }} e fale com {{ item.responsavel }} para saber mais sobre os
+          pratos e a participação na feira.
+        </p>
+      </div>
+      <aside>
+        <h3>Planeje sua visita</h3>
+        <p>
+          O preço informado é uma média dos produtos do estabelecimento. Entre em contato com a
+          barraca para consultar o cardápio e os valores de cada opção.
+        </p>
+        <a routerLink="/barracas">Descobrir outras barracas →</a>
+      </aside>
+    </section>
+  </article>
 } @else {
-<section class="nao-encontrado">
-  <span>404</span>
-  <h1>Barraca não encontrada</h1>
-  <p>O estabelecimento pode não existir ou ter sido removido da lista.</p>
-  <a routerLink="/barracas">Ver todas as barracas</a>
-</section>
+  <section class="empty nao-encontrado">
+    <span class="eyebrow">Barraca não encontrada</span>
+    <h1>Esse sabor ainda não está por aqui.</h1>
+    <p>O estabelecimento pode ter sido removido ou o endereço está incorreto.</p>
+    <a class="button" routerLink="/barracas">Explorar barracas</a>
+  </section>
 }

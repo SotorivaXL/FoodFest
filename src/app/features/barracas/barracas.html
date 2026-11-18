@@ -1,3 +1,80 @@
-<h1>Barracas participantes</h1>
-<p>Aqui será implementada a listagem pública dos estabelecimentos cadastrados na feira.</p>
-<p>Por enquanto, esta página apresenta somente a estrutura inicial.</p>
+<section class="vitrine" aria-labelledby="titulo-vitrine">
+  <header class="page-heading">
+    <span class="eyebrow">Um passeio pelos sabores</span>
+    <h1 id="titulo-vitrine">Encontre sua próxima <em>descoberta.</em></h1>
+    <p>Explore os estabelecimentos da feira, conheça suas especialidades e planeje sua visita.</p>
+  </header>
+  <div class="filters" aria-label="Filtros de barracas">
+    <div>
+      <label for="busca">Buscar barraca</label
+      ><input
+        id="busca"
+        type="search"
+        placeholder="Nome, especialidade ou localização"
+        [ngModel]="busca()"
+        (ngModelChange)="busca.set($event)"
+      />
+    </div>
+    <div>
+      <label for="participacao">Participação</label
+      ><select
+        id="participacao"
+        [ngModel]="participacao()"
+        (ngModelChange)="participacao.set($event)"
+      >
+        <option value="ativas">Ativas</option>
+        <option value="todas">Todas</option>
+        <option value="inativas">Inativas</option>
+      </select>
+    </div>
+    <div>
+      <label for="ordem">Ordenar por</label
+      ><select id="ordem" [ngModel]="ordem()" (ngModelChange)="ordem.set($event)">
+        <option value="nome">Nome de A a Z</option>
+        <option value="menor-preco">Menor preço médio</option>
+        <option value="maior-preco">Maior preço médio</option>
+      </select>
+    </div>
+  </div>
+  @if (loading()) {
+    <div class="empty" role="status">Preparando os sabores da feira...</div>
+  } @else if (errorMessage()) {
+    <div class="notice error" role="alert">
+      <p>{{ errorMessage() }}</p>
+      <button class="button secondary" type="button" (click)="loadBarracas()">
+        Tentar novamente
+      </button>
+    </div>
+  } @else {
+    <p class="result-count" role="status">
+      {{ filtradas().length }}
+      {{ filtradas().length === 1 ? 'barraca encontrada' : 'barracas encontradas' }}
+    </p>
+    <div class="barraca-grid">
+      @for (barraca of filtradas(); track barraca.id) {
+        <app-barraca-card [barraca]="barraca" />
+      }
+    </div>
+    @if (filtradas().length === 0) {
+      <div class="empty">
+        <h2>
+          {{
+            barracas().length ? 'Nenhuma barraca com esses filtros' : 'A feira está ganhando forma'
+          }}
+        </h2>
+        <p>
+          {{
+            barracas().length
+              ? 'Experimente outro nome, especialidade ou participação.'
+              : 'Os estabelecimentos aparecerão aqui assim que forem cadastrados.'
+          }}
+        </p>
+        @if (barracas().length) {
+          <button class="button secondary" type="button" (click)="limparFiltros()">
+            Limpar filtros
+          </button>
+        }
+      </div>
+    }
+  }
+</section>

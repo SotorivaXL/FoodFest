@@ -1,15 +1,37 @@
-/* CSS do rodapé: pode ser alterado pelos alunos */
 .rodape {
-    background: #1d2440;
-    color: #fff;
-    text-align: center;
-    padding: 24px 16px;
+  background: var(--primaria);
+  color: #fff;
+  padding: 32px clamp(20px, 3vw, 40px);
+  margin-top: 24px;
 }
-
+.rodape > div {
+  max-width: 1320px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
 .rodape p {
-    margin: 0 0 8px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-
+.rodape strong {
+  font-size: 1.4rem;
+  letter-spacing: -0.04em;
+}
+.rodape span,
 .rodape small {
-    color: #c5cbe0;
+  color: #d0dfd3;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  .rodape > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
 }

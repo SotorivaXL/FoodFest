@@ -1,42 +1,156 @@
-<section class="list-box">
-    <div class="top-bar">
-        <h2>Lista de Barracas</h2>
-        <a routerLink="/admin/form" class="btn">Novo</a>
+<section class="list-box" aria-labelledby="titulo-admin">
+  <header class="top-bar">
+    <div>
+      <span class="eyebrow">Organização da feira</span>
+      <h1 id="titulo-admin">Quem faz o FoodFest acontecer.</h1>
+      <p>Cadastre estabelecimentos e acompanhe a participação de cada barraca.</p>
     </div>
-    @if(sucessMessage){
-        <div class="success-message">
-            {{ sucessMessage }}
-        </div>
-    }
-
-    @if(errorMessage){
-        <div class="error-message">
-            {{ errorMessage }}
-        </div>
-    }
-
-    @if (loading) {
-        <div class="loading">
-            <p>Carregando barracas...</p>
-        </div>
-    }
-    @if (!loading && barracas.length === 0){
-        <div class="empty-state">
-            <p>Nenhuma barraca encontrada.</p>
-        </div>
-    }
-
+    <a routerLink="/admin/form" class="button">+ Nova barraca</a>
+  </header>
+  @if (successMessage()) {
+    <div class="notice success" role="status">{{ successMessage() }}</div>
+  }
+  @if (errorMessage()) {
+    <div class="notice error" role="alert">{{ errorMessage() }}</div>
+  }
+  @if (loading()) {
+    <div class="empty" role="status">Carregando os estabelecimentos...</div>
+  } @else if (loadError()) {
+    <div class="notice error" role="alert">
+      <p>{{ loadError() }}</p>
+      <button class="button secondary" type="button" (click)="loadBarracas()">
+        Tentar novamente
+      </button>
+    </div>
+  } @else {
+    <div class="stat-grid" aria-label="Resumo da participação">
+      <div>
+        <span>Estabelecimentos</span><strong>{{ barracas().length }}</strong>
+      </div>
+      <div>
+        <span>Participação ativa</span><strong>{{ ativas() }}</strong>
+      </div>
+      <div>
+        <span>Participação inativa</span><strong>{{ barracas().length - ativas() }}</strong>
+      </div>
+    </div>
+    <div class="filters">
+      <div>
+        <label for="admin-busca">Buscar estabelecimento</label
+        ><input
+          id="admin-busca"
+          type="search"
+          placeholder="Nome, responsável, especialidade..."
+          [ngModel]="busca()"
+          (ngModelChange)="busca.set($event)"
+        />
+      </div>
+      <div>
+        <label for="admin-participacao">Participação</label
+        ><select
+          id="admin-participacao"
+          [ngModel]="participacao()"
+          (ngModelChange)="participacao.set($event)"
+        >
+          <option value="todas">Todas</option>
+          <option value="ativas">Ativas</option>
+          <option value="inativas">Inativas</option>
+        </select>
+      </div>
+    </div>
+    <p class="result-count" role="status">
+      {{ filtradas().length }}
+      {{ filtradas().length === 1 ? 'estabelecimento encontrado' : 'estabelecimentos encontrados' }}
+    </p>
     <div class="barraca-grid">
-        @for(barraca of barracas; track barraca.id){
-        <div class="barraca-item">
-            <h3>{{ barraca.nome }}</h3>
-            <p>{{ barraca.especialidade }}</p>
-            <p>{{ barraca.precoMedio}}</p>
-            <div class="actions">
-                <button type="button" class="btn-edit" (click)="edit(barraca.id)">Editar</button>
-                <button type="button" class="btn-delete" (click)="remove(barraca.id)">Excluir</button>
+      @for (barraca of filtradas(); track barraca.id) {
+        <article class="barraca-item" [attr.aria-busy]="pendingId() === barraca.id">
+          <div class="item-heading">
+            <span class="badge" [class.inativa]="!barraca.ativa">{{
+              barraca.ativa ? 'Ativa' : 'Inativa'
+            }}</span
+            ><a
+              [routerLink]="['/barracas', barraca.id]"
+              [attr.aria-label]="'Ver detalhes de ' + barraca.nome"
+              >Ver detalhes ↗</a
+            >
+          </div>
+          <h2>{{ barraca.nome }}</h2>
+          <p class="especialidade">{{ barraca.especialidade }}</p>
+          <dl>
+            <div>
+              <dt>Responsável</dt>
+              <dd>{{ barraca.responsavel }}</dd>
             </div>
-        </div>
-        }
+            <div>
+              <dt>Localização</dt>
+              <dd>{{ barraca.localizacao }}</dd>
+            </div>
+            <div>
+              <dt>Telefone</dt>
+              <dd>
+                <a [href]="telefoneHref(barraca.telefone)">{{ barraca.telefone }}</a>
+              </dd>
+            </div>
+            <div>
+              <dt>Preço médio</dt>
+              <dd class="price">{{ barraca.precoMedio | currency: 'BRL' }}</dd>
+            </div>
+          </dl>
+          <div class="actions">
+            <button
+              class="button small"
+              type="button"
+              [disabled]="pendingId() !== null"
+              (click)="edit(barraca.id)"
+              [attr.aria-label]="'Editar ' + barraca.nome"
+            >
+              Editar
+            </button>
+            <button
+              class="button small secondary"
+              type="button"
+              [disabled]="pendingId() !== null"
+              (click)="alterarParticipacao(barraca)"
+              [attr.aria-label]="(barraca.ativa ? 'Desativar ' : 'Ativar ') + barraca.nome"
+            >
+              {{
+                pendingId() === barraca.id ? 'Aguarde...' : barraca.ativa ? 'Desativar' : 'Ativar'
+              }}
+            </button>
+            <button
+              class="button small danger"
+              type="button"
+              [disabled]="pendingId() !== null"
+              (click)="remove(barraca)"
+              [attr.aria-label]="'Excluir ' + barraca.nome"
+            >
+              Excluir
+            </button>
+          </div>
+        </article>
+      }
     </div>
+    @if (filtradas().length === 0) {
+      <div class="empty">
+        <h2>
+          {{ barracas().length ? 'Nenhum resultado para esses filtros' : 'Sua feira começa aqui' }}
+        </h2>
+        <p>
+          {{
+            barracas().length
+              ? 'Altere a busca ou a participação para encontrar uma barraca.'
+              : 'Cadastre o primeiro estabelecimento participante.'
+          }}
+        </p>
+        @if (barracas().length) {
+          <button class="button secondary" type="button" (click)="limparFiltros()">
+            Limpar filtros
+          </button>
+        } @else {
+          <a class="button" routerLink="/admin/form">Cadastrar barraca</a>
+        }
+      </div>
+    }
+  }
 </section>

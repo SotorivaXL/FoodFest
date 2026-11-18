@@ -25,9 +25,9 @@ describe('ManutencaoBarraca', () => {
 
   beforeEach(() => {
     service = {
-      getById: vi.fn().mockReturnValue(of({ id: 'b1', ...dados })),
-      create: vi.fn().mockReturnValue(of({ id: 'b1', ...dados })),
-      update: vi.fn().mockReturnValue(of({ id: 'b1', ...dados })),
+      getById: vi.fn().mockReturnValue(of({ id: 42, ...dados })),
+      create: vi.fn().mockReturnValue(of({ id: 42, ...dados })),
+      update: vi.fn().mockReturnValue(of({ id: 42, ...dados })),
     };
   });
 
@@ -90,14 +90,14 @@ describe('ManutencaoBarraca', () => {
     'carrega e atualiza uma barraca inativa usando ID de %s',
     async (origem) => {
       const component = await setup(
-        origem === 'path' ? 'b1' : undefined,
-        origem === 'query' ? 'b1' : undefined,
+        origem === 'path' ? '42' : undefined,
+        origem === 'query' ? '42' : undefined,
       );
-      expect(service.getById).toHaveBeenCalledWith('b1');
+      expect(service.getById).toHaveBeenCalledWith('42');
       expect(component.form.getRawValue()).toEqual(dados);
       expect(fixture.nativeElement.querySelector('#ativa').checked).toBe(false);
       component.submit();
-      expect(service.update).toHaveBeenCalledWith('b1', dados);
+      expect(service.update).toHaveBeenCalledWith(42, dados);
       expect(service.create).not.toHaveBeenCalled();
     },
   );
@@ -118,7 +118,7 @@ describe('ManutencaoBarraca', () => {
 
   it('bloqueia gravação após falha no carregamento e permite tentar carregar novamente', async () => {
     service.getById.mockReturnValueOnce(throwError(() => new Error('Falha na rede')));
-    const component = await setup('b1');
+    const component = await setup('42');
     component.form.setValue(dados);
     component.submit();
     expect(service.update).not.toHaveBeenCalled();
@@ -128,6 +128,20 @@ describe('ManutencaoBarraca', () => {
     expect(component.loadError).toBe(false);
     expect(component.errorMessage).toBe('');
     expect(service.getById).toHaveBeenCalledTimes(2);
+  });
+
+  it('rejeita espaços em branco, telefone inválido e preço sem valor finito', async () => {
+    const component = await setup();
+    component.form.setValue({ ...dados, nome: '   ', telefone: 'abc', precoMedio: NaN });
+    component.submit();
+    expect(component.form.invalid).toBe(true);
+    expect(service.create).not.toHaveBeenCalled();
+    component.form.setValue({ ...dados, nome: '  Sabores da Feira  ', precoMedio: 12.555 });
+    component.submit();
+    expect(service.create).not.toHaveBeenCalled();
+    component.form.patchValue({ precoMedio: 12.5 });
+    component.submit();
+    expect(service.create).toHaveBeenCalledWith(dados);
   });
 
   it('evita envios duplicados e mantém os dados quando a gravação falha', async () => {

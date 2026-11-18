@@ -1,11 +1,27 @@
 <header class="cabecalho">
   <div class="cabecalho-conteudo">
-    <a class="marca" routerLink="/">FoodFest</a>
+    <a class="marca" routerLink="/" aria-label="FoodFest — início"
+      ><span aria-hidden="true">🍴</span>FoodFest<span class="marca-ponto" aria-hidden="true"
+        >.</span
+      ></a
+    >
     <nav aria-label="Menu principal">
-      <a routerLink="/" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">Início</a>
-      <a routerLink="/barracas" routerLinkActive="ativo">Barracas</a>
-      <a routerLink="/sobre" routerLinkActive="ativo">Sobre</a>
-      <a class="botao-admin" routerLink="/admin" routerLinkActive="ativo">Admin</a>
+      <a
+        routerLink="/"
+        routerLinkActive="ativo"
+        [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page"
+        >Início</a
+      >
+      <a routerLink="/barracas" routerLinkActive="ativo" ariaCurrentWhenActive="page">Barracas</a>
+      <a routerLink="/sobre" routerLinkActive="ativo" ariaCurrentWhenActive="page">Sobre</a>
+      <a
+        class="botao-admin"
+        routerLink="/admin"
+        routerLinkActive="ativo"
+        ariaCurrentWhenActive="page"
+        >Admin <span aria-hidden="true">↗</span></a
+      >
     </nav>
   </div>
 </header>

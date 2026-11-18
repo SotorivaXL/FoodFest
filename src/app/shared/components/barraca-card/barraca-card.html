@@ -1,0 +1,19 @@
+<article class="card-barraca">
+  <div class="capa" [class]="'capa tom-' + (barraca().id % 5)" aria-hidden="true">
+    <span>🍴</span><small>FoodFest</small>
+  </div>
+  <div class="card-corpo">
+    <span class="badge" [class.inativa]="!barraca().ativa">{{
+      barraca().ativa ? 'Participação ativa' : 'Participação inativa'
+    }}</span>
+    <span class="categoria">{{ barraca().especialidade }}</span>
+    <h3>{{ barraca().nome }}</h3>
+    <p class="local">{{ barraca().localizacao }}</p>
+    <p class="preco">
+      <small>Preço médio</small><strong>{{ barraca().precoMedio | currency: 'BRL' }}</strong>
+    </p>
+    <a [routerLink]="['/barracas', barraca().id]" [attr.aria-label]="'Conhecer ' + barraca().nome"
+      >Conhecer a barraca <span aria-hidden="true">↗</span></a
+    >
+  </div>
+</article>

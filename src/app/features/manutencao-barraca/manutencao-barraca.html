@@ -1,23 +1,32 @@
 <section class="form-box" aria-labelledby="titulo-formulario">
-  <h1 id="titulo-formulario">{{ editingId !== null ? 'Editar barraca' : 'Adicionar barraca' }}</h1>
-  <p>Preencha os dados da barraca. O preço médio deve ser informado em reais.</p>
-
+  <a class="back-link" routerLink="/admin">← Voltar para administração</a>
+  <header>
+    <span class="eyebrow">Cada sabor tem seu espaço</span>
+    <h1 id="titulo-formulario">{{ editing ? 'Editar barraca' : 'Nova barraca' }}</h1>
+    <p>
+      Preencha os dados do estabelecimento. Todos os campos são obrigatórios; você pode escolher se
+      a participação está ativa.
+    </p>
+  </header>
   @if (loadingData) {
-    <div class="info-message" role="status">Carregando dados da barraca...</div>
+    <div class="notice" role="status">Carregando dados da barraca...</div>
   }
   @if (successMessage) {
-    <div class="success-message" role="status">{{ successMessage }}</div>
+    <div class="notice success" role="status">
+      {{ successMessage }} Voltando para a administração...
+    </div>
   }
   @if (errorMessage) {
-    <div class="error-message" role="alert">{{ errorMessage }}</div>
+    <div class="notice error" role="alert">{{ errorMessage }}</div>
   }
-  @if (loadError && editingId !== null) {
-    <button type="button" (click)="loadBarraca(editingId)">Tentar carregar novamente</button>
+  @if (loadError && requestedId !== null) {
+    <button class="button secondary" type="button" (click)="loadBarraca(requestedId)">
+      Tentar carregar novamente
+    </button>
   }
-
   <form [formGroup]="form" (ngSubmit)="submit()" [attr.aria-busy]="loading || loadingData">
     <fieldset [disabled]="loading || loadingData || loadError || successMessage !== ''">
-      <legend>Dados da barraca</legend>
+      <legend>Dados do estabelecimento</legend>
       <div class="fields">
         <div class="field">
           <label for="nome">Nome da barraca</label>
@@ -25,84 +34,126 @@
             id="nome"
             type="text"
             formControlName="nome"
-            required
             minlength="3"
+            maxlength="100"
+            required
             aria-describedby="nome-ajuda"
+            [attr.aria-invalid]="form.controls.nome.touched && form.controls.nome.invalid"
+            placeholder="Ex.: Sabores da Praça"
           />
           <span id="nome-ajuda" class="character-count"
-            >{{ form.controls.nome.value.length }} caracteres · mínimo de 3</span
+            >{{ form.controls.nome.value.length }}/100 caracteres · mínimo de 3</span
           >
           @if (form.controls.nome.touched && form.controls.nome.invalid) {
-            <small>Informe o nome da barraca com no mínimo 3 caracteres.</small>
+            <small>Informe o nome da barraca com 3 a 100 caracteres.</small>
           }
         </div>
-
         <div class="field">
           <label for="responsavel">Responsável</label>
           <input
             id="responsavel"
             type="text"
             formControlName="responsavel"
+            maxlength="100"
             required
             autocomplete="name"
+            [attr.aria-invalid]="
+              form.controls.responsavel.touched && form.controls.responsavel.invalid
+            "
+            placeholder="Nome de quem cuida da barraca"
           />
           @if (form.controls.responsavel.touched && form.controls.responsavel.invalid) {
             <small>Informe o nome do responsável.</small>
           }
         </div>
-
         <div class="field">
-          <label for="especialidade">Especialidade</label>
-          <input id="especialidade" type="text" formControlName="especialidade" required />
+          <label for="especialidade">Especialidade culinária</label>
+          <input
+            id="especialidade"
+            type="text"
+            formControlName="especialidade"
+            maxlength="100"
+            required
+            [attr.aria-invalid]="
+              form.controls.especialidade.touched && form.controls.especialidade.invalid
+            "
+            placeholder="Ex.: Massas artesanais"
+          />
           @if (form.controls.especialidade.touched && form.controls.especialidade.invalid) {
-            <small>Informe a especialidade da barraca.</small>
+            <small>Informe a especialidade culinária.</small>
           }
         </div>
-
         <div class="field">
           <label for="localizacao">Localização</label>
-          <input id="localizacao" type="text" formControlName="localizacao" required />
+          <input
+            id="localizacao"
+            type="text"
+            formControlName="localizacao"
+            maxlength="200"
+            required
+            [attr.aria-invalid]="
+              form.controls.localizacao.touched && form.controls.localizacao.invalid
+            "
+            placeholder="Ex.: Praça de alimentação, setor A"
+          />
           @if (form.controls.localizacao.touched && form.controls.localizacao.invalid) {
             <small>Informe onde a barraca está localizada.</small>
           }
         </div>
-
         <div class="field">
           <label for="precoMedio">Preço médio (R$)</label>
           <input
             id="precoMedio"
             type="number"
             formControlName="precoMedio"
-            required
             min="0"
             step="0.01"
+            required
+            [attr.aria-invalid]="
+              form.controls.precoMedio.touched && form.controls.precoMedio.invalid
+            "
+            aria-describedby="preco-ajuda"
           />
+          <span id="preco-ajuda" class="character-count"
+            >Valor em reais, com até duas casas decimais.</span
+          >
           @if (form.controls.precoMedio.touched && form.controls.precoMedio.invalid) {
-            <small>Informe um preço médio maior ou igual a zero.</small>
+            <small>Informe um preço válido maior ou igual a zero.</small>
           }
         </div>
-
         <div class="field">
           <label for="telefone">Telefone</label>
-          <input id="telefone" type="tel" formControlName="telefone" required autocomplete="tel" />
+          <input
+            id="telefone"
+            type="tel"
+            formControlName="telefone"
+            required
+            autocomplete="tel"
+            maxlength="25"
+            [attr.aria-invalid]="form.controls.telefone.touched && form.controls.telefone.invalid"
+            placeholder="(46) 99999-1234"
+            aria-describedby="telefone-ajuda"
+          />
+          <span id="telefone-ajuda" class="character-count"
+            >Inclua o DDD. O código do país é opcional.</span
+          >
           @if (form.controls.telefone.touched && form.controls.telefone.invalid) {
-            <small>Informe o telefone de contato.</small>
+            <small>Informe o telefone com DDD, entre 10 e 13 dígitos.</small>
           }
         </div>
       </div>
-
-      <label class="checkbox-field" for="ativa">
-        <input id="ativa" type="checkbox" formControlName="ativa" />
-        Barraca ativa
-      </label>
-
-      <button type="submit">
-        {{
-          loading ? 'Salvando...' : editingId !== null ? 'Salvar alterações' : 'Cadastrar barraca'
-        }}
-      </button>
+      <label class="checkbox-field" for="ativa"
+        ><input id="ativa" type="checkbox" formControlName="ativa" /><span
+          ><strong>Participação ativa</strong
+          ><small>A barraca aparecerá entre os participantes ativos da feira.</small></span
+        ></label
+      >
+      <div class="form-actions">
+        <button class="button" type="submit">
+          {{ loading ? 'Salvando...' : editing ? 'Salvar alterações' : 'Cadastrar barraca' }}
+        </button>
+        <a class="button secondary" routerLink="/admin">Cancelar</a>
+      </div>
     </fieldset>
   </form>
-
-  <a class="back-link" routerLink="/admin">Voltar para administração</a>
 </section>

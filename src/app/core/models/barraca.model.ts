@@ -1,5 +1,5 @@
 export interface Barraca {
-  id: string;
+  id: number;
   nome: string;
   responsavel: string;
   especialidade: string;

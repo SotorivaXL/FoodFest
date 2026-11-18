@@ -1,59 +1,70 @@
-# FoodFest
+# FoodFest — Organização de Feiras Gastronômicas
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.21.
+Aplicação Angular para gerenciar estabelecimentos participantes e apresentar os sabores da feira ao público.
 
-## Development server
+## Executar
 
-To start a local development server, run:
+Use a pasta principal do repositório:
 
-```bash
-ng serve
+```powershell
+cd D:\FACULDADE\Fontes\FoodFest
+npm ci
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abra [http://localhost:4200](http://localhost:4200). É necessário Node.js compatível com Angular 21 e acesso à internet para consultar o Firebase.
 
-## Code scaffolding
+## Páginas e funcionalidades
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Início:** contagens reais de estabelecimentos, participantes ativos e especialidades; carrossel de até dez barracas ativas.
+- **Barracas:** busca por nome, responsável, especialidade e localização; filtro de participação e ordenação por nome ou preço.
+- **Detalhes:** informações completas, preço em reais, participação e link para telefonar.
+- **Admin:** resumo da feira, busca e filtro; cadastro, edição, exclusão com confirmação e ativação/desativação de participação.
+- **Formulário:** todos os campos do model, validações e tratamento de carregamento, sucesso e falha.
+- **Sobre:** apresentação do projeto e orientações para visitantes e organizadores.
 
-```bash
-ng generate component component-name
+As páginas funcionam em telas pequenas e grandes. Falhas de rede e resultados vazios têm mensagens próprias e opção de repetir a consulta.
+
+## Model
+
+```typescript
+export interface Barraca {
+  id: number;
+  nome: string;
+  responsavel: string;
+  especialidade: string;
+  localizacao: string;
+  precoMedio: number;
+  telefone: string;
+  ativa: boolean;
+}
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+O ID é gerenciado pelo serviço. Não é necessário digitá-lo no formulário.
+O preço aceita zero e valores com até duas casas decimais. O telefone aceita de 10 a 13 dígitos, com DDD e código de país opcional. A participação pode ser ativa ou inativa.
 
-```bash
-ng generate --help
+## Persistência
+
+O projeto utiliza o Firebase Realtime Database já configurado em
+`src/app/core/services/barraca.service.ts`, na coleção `barracas`.
+
+O model usa ID numérico, enquanto o serviço mantém internamente o vínculo com a chave do Firebase. Novos registros salvam o ID numérico junto aos dados. Registros antigos sem esse campo recebem um ID numérico estável durante a leitura, sem alteração do banco; links antigos com a chave do Firebase também continuam aceitos. Na edição, o ID é preservado.
+
+A ativação/desativação usa PATCH apenas no campo `ativa`. O cadastro, a edição e a exclusão persistem no Firebase. As permissões para essas operações são as configuradas nesse banco.
+
+## Verificação
+
+```powershell
+npm test -- --watch=false
+npm run build
 ```
 
-## Building
+Os testes usam respostas simuladas do Firebase e não gravam nem excluem dados reais. Cobrem os fluxos de manutenção, compatibilidade de IDs, filtros, participação, carregamento e falhas de rede.
 
-To build the project run:
+O build é gerado em `dist/FoodFest`. Para executar a versão compilada com SSR:
 
-```bash
-ng build
+```powershell
+npm run serve:ssr:FoodFest
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+As páginas públicas consultam os dados durante a renderização no servidor. A administração é renderizada no navegador para buscar sempre os registros atuais; a página Sobre é pré-renderizada.

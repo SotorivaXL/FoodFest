@@ -1,0 +1,119 @@
+:host {
+  display: block;
+  min-width: 0;
+  height: 100%;
+}
+.card-barraca {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--borda);
+  border-radius: 22px;
+  background: var(--superficie);
+  box-shadow: 0 8px 24px rgb(23 62 53 / 5%);
+  transition: box-shadow 0.2s;
+}
+.card-barraca:hover {
+  box-shadow: 0 14px 32px rgb(23 62 53 / 12%);
+}
+.capa {
+  min-height: 150px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  background: #235d4e;
+}
+.capa::before,
+.capa::after {
+  content: '';
+  position: absolute;
+  border: 1px solid #ffffff35;
+  border-radius: 50%;
+  width: 170px;
+  height: 170px;
+}
+.capa::after {
+  width: 110px;
+  height: 110px;
+}
+.capa > span {
+  font-size: 3rem;
+  z-index: 1;
+}
+.capa small {
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  color: #fff;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+.tom-1 {
+  background: #8b6030;
+}
+.tom-2 {
+  background: #38675c;
+}
+.tom-3 {
+  background: #70565f;
+}
+.tom-4 {
+  background: #a7553d;
+}
+.card-corpo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 24px;
+  overflow-wrap: anywhere;
+}
+.badge {
+  align-self: flex-start;
+  margin-bottom: 18px;
+}
+.categoria {
+  color: var(--acento-texto);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+h3 {
+  margin: 8px 0;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+.local {
+  margin: 0 0 20px;
+  color: var(--suave);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.preco {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: auto 0 20px;
+}
+.preco small {
+  color: var(--suave);
+}
+.preco strong {
+  font-size: 1.3rem;
+}
+a {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--borda);
+  padding-top: 18px;
+  text-decoration: none;
+  font-weight: 700;
+  color: var(--primaria);
+}
+a:hover {
+  color: var(--acento-texto);
+}

@@ -1,64 +1,90 @@
-/* CSS do cabeçalho: pode ser alterado pelos alunos */
 .cabecalho {
-    background: #1d2440;
-    color: #fff;
+  background: var(--primaria);
+  color: #fff;
+  border-bottom: 3px solid var(--acento);
 }
-
 .cabecalho-conteudo {
-    width: 100%;
-    padding: 18px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+  max-width: 1400px;
+  padding: 18px clamp(20px, 3vw, 40px);
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
-
 .marca {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
 }
-
+.marca > span:first-child {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #ffffff35;
+  border-radius: 12px;
+  font-size: 1.1rem;
+}
+.marca .marca-ponto {
+  color: var(--acento);
+  margin-left: -6px;
+}
 nav {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
 }
-
 nav a {
-    color: #e7eaf5;
-    text-decoration: none;
-    padding: 9px 12px;
-    border-radius: 6px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  color: #edf3ed;
+  text-decoration: none;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  font-weight: 600;
 }
-
 nav a:hover,
 nav a.ativo {
-    background: #35416b;
-    color: #fff;
+  background: #ffffff14;
+  color: #fff;
 }
-
 nav .botao-admin {
-    background: #e5b85b;
-    color: #172039;
-    font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 12px;
+  background: var(--acento);
+  color: #293b29;
 }
-
 nav .botao-admin:hover,
 nav .botao-admin.ativo {
-    background: #f3cf83;
-    color: #172039;
+  background: #f8ce8b;
+  color: #293b29;
 }
-
-@media (max-width: 600px) {
-    .cabecalho-conteudo {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    nav {
-        gap: 4px;
-    }
+@media (max-width: 580px) {
+  .cabecalho-conteudo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  nav {
+    width: 100%;
+    gap: 3px;
+    justify-content: space-between;
+  }
+  nav a {
+    padding: 9px 12px;
+    font-size: 0.82rem;
+  }
+  nav .botao-admin {
+    margin-left: 0;
+    gap: 6px;
+  }
 }

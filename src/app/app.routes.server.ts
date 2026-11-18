@@ -1,16 +1,11 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
 
 export const serverRoutes: ServerRoute[] = [
-  {
-    path: 'barracas/:id',
-    renderMode: RenderMode.Server
-  },
-  {
-    path: 'admin/form/:id',
-    renderMode: RenderMode.Server
-  },
-  {
-    path: '**',
-    renderMode: RenderMode.Prerender
-  }
+  { path: '', renderMode: RenderMode.Server },
+  { path: 'barracas', renderMode: RenderMode.Server },
+  { path: 'barracas/:id', renderMode: RenderMode.Server },
+  { path: 'admin', renderMode: RenderMode.Client },
+  { path: 'admin/form', renderMode: RenderMode.Client },
+  { path: 'admin/form/:id', renderMode: RenderMode.Client },
+  { path: '**', renderMode: RenderMode.Prerender },
 ];

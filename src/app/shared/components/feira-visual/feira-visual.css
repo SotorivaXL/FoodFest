@@ -1,0 +1,142 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.hero-visual {
+  position: relative;
+  height: 100%;
+  min-height: 500px;
+  overflow: hidden;
+  background: var(--primaria);
+}
+.circulo {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid #ffffff25;
+  width: 450px;
+  height: 450px;
+}
+.circulo-um {
+  right: -130px;
+  top: -140px;
+  background: #f0b55b12;
+}
+.circulo-dois {
+  left: -160px;
+  bottom: -170px;
+  background: #ffffff05;
+}
+.cartao {
+  position: absolute;
+  background: #fffdf7;
+  border: 1px solid #ffffff50;
+  box-shadow: 0 20px 50px #071d2630;
+}
+.cartao-principal {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  width: 72%;
+  min-height: 340px;
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+.icone {
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: var(--acento);
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+}
+.cartao-principal small {
+  margin-top: auto;
+  padding-top: 30px;
+  color: var(--suave);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.cartao-principal strong {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin: 12px 0 24px;
+}
+.linha {
+  display: flex;
+  gap: 8px;
+}
+.linha span {
+  width: 65%;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--primaria);
+}
+.linha span:last-child {
+  width: 25%;
+  background: var(--acento);
+}
+.cartao-flutuante {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+}
+.cartao-flutuante > span {
+  display: grid;
+  place-items: center;
+  background: var(--creme);
+  color: var(--acento-texto);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+.cartao-flutuante div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cartao-flutuante small {
+  color: var(--suave);
+  font-size: 0.75rem;
+}
+.cartao-vendas {
+  top: 13%;
+  left: 5%;
+}
+.cartao-criadores {
+  bottom: 12%;
+  right: 4%;
+}
+@media (max-width: 900px) {
+  .hero-visual {
+    min-height: 450px;
+  }
+  .cartao-principal {
+    width: 60%;
+    max-width: 400px;
+  }
+}
+@media (max-width: 560px) {
+  .hero-visual {
+    min-height: 410px;
+  }
+  .cartao-principal {
+    width: 74%;
+    min-height: 300px;
+    padding: 26px;
+  }
+  .cartao-vendas {
+    top: 5%;
+  }
+  .cartao-criadores {
+    bottom: 5%;
+  }
+}
